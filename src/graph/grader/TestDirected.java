@@ -40,17 +40,9 @@ public class TestDirected {
         
         WeightedGraph wG = cN.getCommunityGraph();
         
-        HashMap<Integer, HashMap<Integer, Integer>> vertices = wG.exportGraph();
+        //HashMap<Integer, HashMap<Integer, Integer>> vertices = wG.exportGraph();
         
-        for (Integer g: vertices.keySet())
-        {
-        	System.out.println(g);
-        	HashMap<Integer, Integer> hM = vertices.get(g);
-        	System.out.println("Size" + hM.size());
-        	
         
-        	
-        }
         
         System.out.println(wG.toString());
 	}

@@ -36,7 +36,7 @@ public class CommunityNetwork {
 		}
 		
 		//add edge to the weighted graph only if it leads from one community to another. Disregard intracommunity edges.
-		HashMap<Integer, HashSet<Integer>> allVertices = new HashMap<Integer, HashSet<Integer>>();	
+		HashMap<Integer, HashSet<Integer>> allVertices = graph.exportGraph();	
 		for (Integer v: allVertices.keySet())
 		{
 			Integer vCommunity = vertexToCommunity.get(v);
