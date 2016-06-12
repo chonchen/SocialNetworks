@@ -36,4 +36,34 @@ public class WeightedGraph {
 	{
 		return vertices;
 	}
+	
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("From     To     Weight\n");
+		for (Integer from: vertices.keySet())
+		{
+			HashMap<Integer, Integer> toVertices = vertices.get(from);
+			for (Integer to: toVertices.keySet())
+			{
+				sb.append(from.toString() + "         " + to.toString() + "       " + toVertices.get(to).toString() +"\n");
+			}
+		}
+		
+		return sb.toString();
+	}
+	
+	
+	public static void main(String[] args)
+	{
+		WeightedGraph wGraph = new WeightedGraph();
+		
+		wGraph.addVertex(0);
+		wGraph.addVertex(1);
+		wGraph.addEdge(0, 1);
+		wGraph.addEdge(0, 1);
+		wGraph.addEdge(1, 0);
+		System.out.println(wGraph.toString());
+		
+	}
 }

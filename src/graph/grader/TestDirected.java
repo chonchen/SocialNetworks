@@ -15,10 +15,10 @@ public class TestDirected {
 	public static void main(String[] args)
 	{
 		Graph graph = new CapGraph();
-        //GraphLoader.loadGraph(graph, "data/directed_small_test.txt");
+        GraphLoader.loadGraph(graph, "data/directed_small_test.txt");
         //GraphLoader.loadGraph(graph, "data/small_test_graph.txt");
         //GraphLoader.loadGraph(graph, "data/twitter_combined.txt");
-        GraphLoader.loadGraph(graph, "data/facebook_2000.txt");
+        //GraphLoader.loadGraph(graph, "data/facebook_2000.txt");
         //GraphLoader.loadGraph(graph, "data/facebook_1000.txt");
         
         List<Graph> ll = graph.getSCCs();
@@ -46,10 +46,13 @@ public class TestDirected {
         {
         	System.out.println(g);
         	HashMap<Integer, Integer> hM = vertices.get(g);
+        	System.out.println("Size" + hM.size());
         	
         
         	
         }
+        
+        System.out.println(wG.toString());
 	}
 
 }
