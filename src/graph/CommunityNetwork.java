@@ -7,6 +7,7 @@ import java.util.List;
 public class CommunityNetwork {
 	
 	private HashMap<Integer, Integer> vertexToCommunity;
+	private WeightedGraph wGraph;
 	
 	public CommunityNetwork(Graph graph)
 	{		
@@ -28,7 +29,7 @@ public class CommunityNetwork {
 		}
 		
 		//add communities as vertices to an edge-weighted graph
-		WeightedGraph wGraph = new WeightedGraph();
+		wGraph = new WeightedGraph();
 		for (int i = 0; i <communityNumber; i++)
 		{
 			wGraph.addVertex(i);
@@ -53,10 +54,10 @@ public class CommunityNetwork {
 		
 	}
 	
-	public Graph getCommunityGraph()
+	public WeightedGraph getCommunityGraph()
 	{
 		
-		return null;
+		return wGraph;
 	}
 
 }
