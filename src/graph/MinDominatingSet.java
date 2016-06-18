@@ -32,11 +32,12 @@ public class MinDominatingSet{
 	
 	private HashMap<Integer, HashSet<Integer>> vertices;
 	private List<Node> vertexList;
+	private List<Integer> dominatingSet;
 	
 	public MinDominatingSet(Graph graph)
 	{	
-		vertexList = new LinkedList<Node>();
 		vertices = graph.exportGraph();
+		vertexList = new LinkedList<Node>();
 		
 		for (Integer v: vertices.keySet())
 		{
@@ -48,11 +49,9 @@ public class MinDominatingSet{
 		}
 		
 		Collections.sort(vertexList);
-	}
-	
-	public List<Integer> getDominatingSet()
-	{
-		List<Integer> dominatingSet = new LinkedList<Integer>();
+		
+		
+		dominatingSet = new LinkedList<Integer>();
 		HashSet<Integer> covered = new HashSet<Integer>();
 		
 		for (Node node: vertexList)
@@ -68,7 +67,10 @@ public class MinDominatingSet{
 				covered.add(e);
 			}
 		}
-		
+	}
+	
+	public List<Integer> getDominatingSet()
+	{
 		return dominatingSet;
 	}
 }
