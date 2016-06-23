@@ -27,4 +27,6 @@ public interface Graph {
 	 * The returned representation ignores edge weights and 
 	 * multi-edges.  */
     public HashMap<Integer, HashSet<Integer>> exportGraph();
+    
+    public Graph reverse();
 } 

@@ -7,13 +7,13 @@ public class FordFulkerson {
 	
 	private boolean[] marked;
 	private FlowEdge[] edgeTo;
-	private int value;
+	private double value;
 	
 	public FordFulkerson(FlowNetwork G, int s, int t)
 	{
 		while (hasAugmentingPath(G, s, t))
 		{
-			int bottle = Integer.MAX_VALUE;
+			double bottle = Double.POSITIVE_INFINITY;
 			for (int v = t; v != s; v = edgeTo[v].other(v))
 				bottle = Math.min(bottle,edgeTo[v].residualCapacityTo(v));
 			
@@ -24,7 +24,7 @@ public class FordFulkerson {
 		}
 	}
 	
-	public int value(){return value;}
+	public double value(){return value;}
 	
 	public boolean inCut(int v) {return marked[v];}
 	

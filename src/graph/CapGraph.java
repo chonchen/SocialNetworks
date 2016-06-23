@@ -117,7 +117,7 @@ public class CapGraph implements Graph {
 		return vertices;
 	}
 	
-	private Graph reverse()
+	public Graph reverse()
 	{
 		Graph reverse = new CapGraph();
 		

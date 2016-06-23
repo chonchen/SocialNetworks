@@ -54,7 +54,10 @@ public class CommunityNetwork {
 				Integer eTCommunity = vertexToCommunity.get(eT);
 				if (vCommunity != eTCommunity)
 				{
-					wGraph.addEdge(vCommunity, eTCommunity);
+					//for (int i = 0; i < edgesTo.size(); i++)
+					//{
+						wGraph.addEdge(vCommunity, eTCommunity);
+					//}
 				}
 			}
 		}
@@ -63,7 +66,6 @@ public class CommunityNetwork {
 	
 	public WeightedGraph getCommunityGraph()
 	{
-		
 		return wGraph;
 	}
 	

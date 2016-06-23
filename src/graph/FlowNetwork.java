@@ -9,7 +9,7 @@ public class FlowNetwork {
 	private int E;
 	private List<FlowEdge>[] adj;
 	
-	FlowNetwork(int V)
+	public FlowNetwork(int V)
 	{
 		this.V = V;
 		adj = (List<FlowEdge>[]) new List[V];
