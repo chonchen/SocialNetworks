@@ -53,11 +53,8 @@ public class CommunityNetwork {
 			{
 				Integer eTCommunity = vertexToCommunity.get(eT);
 				if (vCommunity != eTCommunity)
-				{
-					//for (int i = 0; i < edgesTo.size(); i++)
-					//{
-						wGraph.addEdge(vCommunity, eTCommunity);
-					//}
+				{	
+					wGraph.addEdge(vCommunity, eTCommunity, new Edge(v, eT));	
 				}
 			}
 		}
