@@ -36,7 +36,12 @@ public class MinDominatingSet{
 	
 	public MinDominatingSet(Graph graph)
 	{	
+		if (graph == null) throw new IllegalArgumentException("Null graph");
+		
 		vertices = graph.exportGraph();
+		
+		if (vertices == null) throw new IllegalArgumentException("Graph has no vertices");
+		
 		vertexList = new LinkedList<Node>();
 		
 		for (Integer v: vertices.keySet())
