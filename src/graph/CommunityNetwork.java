@@ -6,10 +6,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This class helps convert a graph where each vertex represents an individual to a WeightedGraph where each
+ * vertex represents an SCC, and where each WeightedDirectedEdge is an Edge from one community to another.
+ *
+ */
 public class CommunityNetwork {
 	
+	//data structure for keeping track of which vertices belong to which communities
 	private HashMap<Integer, Integer> vertexToCommunity;
+	
+	//data structure for keeping track of which communities contain which vertices
 	private ArrayList<Set<Integer>> communityToVertex;
+	
+	//the weighted graph that will be created given a Graph input
 	private WeightedGraph wGraph;
 	
 	public CommunityNetwork(Graph graph)
@@ -54,23 +64,26 @@ public class CommunityNetwork {
 				Integer eTCommunity = vertexToCommunity.get(eT);
 				if (vCommunity != eTCommunity)
 				{	
-					wGraph.addEdge(vCommunity, eTCommunity, new Edge(v, eT));	
+					wGraph.addEdge(vCommunity, eTCommunity, new EdgeComponent(v, eT));	
 				}
 			}
 		}
 		
 	}
 	
+	//returns the WeightedGraph created
 	public WeightedGraph getCommunityGraph()
 	{
 		return wGraph;
 	}
 	
+	//given an individual vertex, give the community number it belongs to
 	public Integer vertexToCommunity(Integer vertex)
 	{
 		return vertexToCommunity.get(vertex);
 	}
 	
+	//given a community number, return the list of all individual vertices that belong to that community
 	public Set<Integer> communityToVertex(Integer community)
 	{
 		return communityToVertex.get(community);

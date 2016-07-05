@@ -17,26 +17,26 @@ import java.util.List;
  */
 public class CapGraph implements Graph {
 	
+	//HashMap which stores FROM vertices as keys and a HashSet as values
+	//Each HashSet contains the TO vertices that the FROM vertices have an edge to
 	private HashMap<Integer, HashSet<Integer>> vertices = new HashMap<Integer, HashSet<Integer>>();
 
-	/* (non-Javadoc)
-	 * @see graph.Graph#addVertex(int)
-	 */
+
 	@Override
+	//adding a vertex "num" means adding a key "num" to the HashMap, with the value of an empty HashSet object
 	public void addVertex(int num) {
-		// TODO Auto-generated method stub
+		
 		if (!vertices.containsKey(num))
 		{
 			vertices.put(num, new HashSet<Integer>());
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see graph.Graph#addEdge(int, int)
-	 */
+
 	@Override
+	//adding an Edge adds the TO vertex integer to the HashSet from the HashMap where the key is equal to FROM
 	public void addEdge(int from, int to) {
-		// TODO Auto-generated method stub
+		
 		if (vertices.containsKey(from) && vertices.containsKey(to))
 		{
 			HashSet<Integer> edges = vertices.get(from);
@@ -45,17 +45,20 @@ public class CapGraph implements Graph {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see graph.Graph#getEgonet(int)
-	 */
+
 	@Override
+	//returns the Egonet for a specific vertex
 	public Graph getEgonet(int center) {
-		// TODO Auto-generated method stub
+		
 		if (!vertices.containsKey(center)) return null;
 			
+		//Keeps a list of all vertices that should be in the egonetgraph
 		HashSet<Integer> egonetVertices = new HashSet<Integer>();
+		
+		//adds the center to the Set of vertices
 		egonetVertices.add(center);
 		
+		//adds each of the center's neighboring vertices to the set of vertices
 		for (Integer v: vertices.get(center))
 		{
 			egonetVertices.add(v);
@@ -63,11 +66,13 @@ public class CapGraph implements Graph {
 		
 		Graph egonet = new CapGraph();
 		
+		//adds each of the vertices in the Set to the actual egonet graph
 		for (Integer v: egonetVertices)
 		{
 			egonet.addVertex(v);
 		}
 		
+		//adds all of the edges that go between all the vertices in the Set to the egonet graph
 		for (Integer v: egonetVertices)
 		{
 			for (Integer e: vertices.get(v))
@@ -82,12 +87,11 @@ public class CapGraph implements Graph {
 		return egonet;
 	}
 
-	/* (non-Javadoc)
-	 * @see graph.Graph#getSCCs()
-	 */
+
 	@Override
+	//get all SCCs for the graph by performing two passes of Depth first search
 	public List<Graph> getSCCs() {
-		// TODO Auto-generated method stub
+		
 		List<Graph> sCCs = new LinkedList<Graph>();
 		
 		List<Integer> reversePostOrder = reversePostOrder(this.reverse());
@@ -108,15 +112,14 @@ public class CapGraph implements Graph {
 		return sCCs;
 	}
 
-	/* (non-Javadoc)
-	 * @see graph.Graph#exportGraph()
-	 */
+
 	@Override
 	public HashMap<Integer, HashSet<Integer>> exportGraph() {
-		// TODO Auto-generated method stub
+		
 		return vertices;
 	}
 	
+	//Creates a reversed version of the graph.
 	public Graph reverse()
 	{
 		Graph reverse = new CapGraph();
@@ -137,6 +140,7 @@ public class CapGraph implements Graph {
 		return reverse;
 	}
 	
+	//returns the reverse post order
 	private List<Integer> reversePostOrder(Graph g)
 	{
 		HashMap<Integer, HashSet<Integer>> graphData = g.exportGraph();
@@ -153,6 +157,7 @@ public class CapGraph implements Graph {
 		return finished;
 	}
 	
+	//the first pass of Depth First Search that creates the reverse post order through recursion
 	private void dfsFirstPass(Integer i, HashMap<Integer, HashSet<Integer>> graphData, HashSet<Integer> visited, List<Integer> finished)
 	{
 		if (visited.contains(i)) return;
@@ -167,6 +172,7 @@ public class CapGraph implements Graph {
 		finished.add(0, i);
 	}
 	
+	//the second pass of dfs which uses the reverse post order created from the first pass
 	private boolean dfsSecondPass(Integer i, Graph graph, HashSet<Integer> visited)
 	{
 		if (visited.contains(i)) return false;

@@ -7,7 +7,7 @@ import java.util.List;
 
 import graph.CapGraph;
 import graph.CommunityNetwork;
-import graph.Edge;
+import graph.EdgeComponent;
 import graph.FlowEdge;
 import graph.FlowNetwork;
 import graph.FordFulkerson;
@@ -73,8 +73,8 @@ public class TestMinCut {
         for (WeightedDirectedEdge edge : communityEdges)
         {
         	System.out.println("From: " + edge.fromVertex() + " To: " + edge.toVertex() + " weight: " + edge.weight());
-        	List<Edge> edgeList = edge.composedOfEdges();
-        	for (Edge e : edgeList)
+        	List<EdgeComponent> edgeList = edge.composedOfEdges();
+        	for (EdgeComponent e : edgeList)
         	{
         		System.out.println(e.toString());
         	}
