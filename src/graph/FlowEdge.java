@@ -37,9 +37,9 @@ public class FlowEdge {
 	public double flow() {return flow;}
 	
 	/**
-	 * This method returns the "sibling" vertex that makes up the FlowEdge when a vertex is given
-	 * This is helpful for the FordFulkerson algorithm when we travel backwards across directed
-	 * edges
+	 * This method returns the adjoining vertex that makes up the FlowEdge when a vertex is given
+	 * This is helpful because we need to travel both forward and backward along edges for the FordFulkerson algorithm.
+	 * It helps us to move to the adjoining vertex without much code.
 	 */
 	public int other(int vertex)
 	{
@@ -49,8 +49,9 @@ public class FlowEdge {
 	}
 	
 	/**
-	 * The residual capacity to a From edge is equal to the flow.
-	 * The residual capacity to a To edge is equal to the capacity minus the flow.
+	 * The definition of residualCapacityTo a vertex differs depending on whether we're moving forward or backward along the edge.
+	 * When we're moving forward along the edge, the residual capacity is how much capacity we have leftover in the edge (Capacity minus current flow)
+	 * When we're moving backwards along the edge, the residual capacity is how much flow we have to remove to get to zero flow (equal to the current flow)
 	 */
 	public double residualCapacityTo(int vertex)
 	{
@@ -60,9 +61,8 @@ public class FlowEdge {
 	}
 	
 	/**
-	 * Adding a residual flow to a from 
-	 * 
-	 * 
+	 * This method is used to add additional flow to a forward FlowEdge or remove flow from a backward FlowEdge
+	 * The value delta is the amount of flow that we want to add or subtract from a FlowEdge
 	 */
 	public void addResidualFlowTo(int vertex, double delta)
 	{
