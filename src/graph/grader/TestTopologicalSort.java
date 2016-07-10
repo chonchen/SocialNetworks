@@ -11,7 +11,7 @@ import java.util.List;
 import graph.CapGraph;
 import graph.CommunityNetwork;
 import graph.Graph;
-import graph.WeightedDirectedEdge;
+import graph.WeightedEdge;
 import graph.WeightedGraph;
 import util.GraphLoader;
 
@@ -43,7 +43,7 @@ public class TestTopologicalSort {
 	
 	private static Graph reverse(WeightedGraph g, Graph reverse)
 	{	
-		HashMap<Integer, HashMap<Integer, WeightedDirectedEdge>> weightedGraphExport = g.exportGraph();
+		HashMap<Integer, HashMap<Integer, WeightedEdge>> weightedGraphExport = g.exportGraph();
 		
 		for (Integer v: weightedGraphExport.keySet())
 		{

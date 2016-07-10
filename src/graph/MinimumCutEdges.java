@@ -1,42 +1,29 @@
-package graph.grader;
+package graph;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
-import graph.CapGraph;
-import graph.CommunityNetwork;
-import graph.EdgeComponent;
-import graph.FlowEdge;
-import graph.FlowNetwork;
-import graph.FordFulkerson;
-import graph.Graph;
-import graph.WeightedEdge;
-import graph.WeightedGraph;
-import util.GraphLoader;
-
-public class TestMinCut {
+/**
+ * This class has inputs of Graph and start and end vertices. It returns a list of edges that are the bottleneck
+ * for the flow between the community containing the start vertex and the community containing the end vertex.
+ * @author Tony
+ *
+ */
+public final class MinimumCutEdges {
 	
-	public static void main(String[] args)
+	public static List<EdgeComponent> getEdges(Graph graph, int startVertex, int endVertex)
 	{
-		Graph graph = new CapGraph();
-		//GraphLoader.loadGraph(graph, "data/directed_small_test.txt");
-		GraphLoader.loadGraph(graph, "data/soc-Epinions1.txt");
-		
-		CommunityNetwork communityNetwork = new CommunityNetwork(graph.reverse());
+		//Transform CapGraph to a WeightedGraph
+		CommunityNetwork communityNetwork = new CommunityNetwork(graph);
 		WeightedGraph weightedGraph = communityNetwork.getCommunityGraph();
 		
-		
+		//Export the weighted graph so we can convert it to a FlowNetwork
 		HashMap<Integer, HashMap<Integer, WeightedEdge>> wgExport = weightedGraph.exportGraph();
 		
-		System.out.println("number of vertices " + wgExport.size());
-		
-		
+		//FlowNetwork conversion
 		FlowNetwork flowNetwork = new FlowNetwork(wgExport.size());
-		
-		int count = 0;
 		
 		for (Integer from : wgExport.keySet())
 		{
@@ -45,42 +32,30 @@ public class TestMinCut {
 			{
 				int weight = edges.get(to).weight();
 				flowNetwork.addEdge(new FlowEdge(from, to, weight));
-				
-				count++;
+
 			}
 		}
 		
-		System.out.println("number of edges " + count);
+		int startCommunity = communityNetwork.vertexToCommunity(startVertex);
+		int endCommunity = communityNetwork.vertexToCommunity(endVertex);
 		
-		Set<Integer> startVertices = communityNetwork.communityToVertex(27255);
-		Set<Integer> endVertices = communityNetwork.communityToVertex(17552);
+		//perform the FordFulkerson algorithm
+		FordFulkerson fordfulkerson = new FordFulkerson(flowNetwork, startCommunity, endCommunity);
 		
-		System.out.println("vertices in start:");
-
-		System.out.println(startVertices.toArray()[0]);
-			
-		System.out.println("vertices in end:");
-		for (Integer i: endVertices)
-		{
-			System.out.println(i);
-		}
-		
-		FordFulkerson fordfulkerson = new FordFulkerson(flowNetwork, 27255,17552);
-		
-		
+		//Set to contain the list of vertices that are in the mincut group
 		HashSet<Integer> minCut = new HashSet<Integer>();
-		
 		
         for (int v = 0; v < wgExport.size(); v++) {
             if (fordfulkerson.inCut(v))
             {
             	minCut.add(v);
-            	//System.out.println(v);
             }
         }
         
+        //List to contain all of the bottleneck WeightedEdges
         List<WeightedEdge> communityEdges = new LinkedList<WeightedEdge>();
         
+        //get all of the WeightedEdges leading out of the mincut group and add them to the above list
         for (Integer v : minCut)
         {
         	HashMap<Integer, WeightedEdge> edge = wgExport.get(v);
@@ -94,19 +69,20 @@ public class TestMinCut {
         	}
         }
         
+        //final list to contain the bottleneck normal edges
+        List<EdgeComponent> edgeComponents = new LinkedList<EdgeComponent>();
+        
+        //Get the components that make up each bottleneck WeightedEdge
         for (WeightedEdge edge : communityEdges)
         {
-        	System.out.println("From: " + edge.fromVertex() + " To: " + edge.toVertex() + " weight: " + edge.weight());
         	List<EdgeComponent> edgeList = edge.composedOfEdges();
         	for (EdgeComponent e : edgeList)
         	{
-        		System.out.println(e.toString());
+        		edgeComponents.add(e);
         	}
         }
         
-        
-        
+        //return final list of bottleneck edges
+        return edgeComponents;
 	}
-	
-
 }

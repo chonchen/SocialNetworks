@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 //A WeightedDirectedEdge represents an edge leading from one SCC community to another.
-public class WeightedDirectedEdge {
+public class WeightedEdge {
 
 	//fromVertex is an integer representation of a community the edge is coming from
 	private final int fromVertex;
@@ -19,7 +19,7 @@ public class WeightedDirectedEdge {
 	private List<EdgeComponent> edges = new LinkedList<EdgeComponent>();
 	
 	
-	public WeightedDirectedEdge(int fromVertex, int toVertex)
+	public WeightedEdge(int fromVertex, int toVertex)
 	{
 		this.fromVertex = fromVertex;
 		this.toVertex = toVertex;

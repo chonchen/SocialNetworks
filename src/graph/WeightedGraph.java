@@ -11,14 +11,14 @@ public class WeightedGraph {
 	* Each Sub-HashMap uses the TO vertices as keys. The corresponding value is the WeightedDirectedEdge
 	* that goes from the FROM vertex to the TO vertex.
 	 */
-	private HashMap<Integer, HashMap<Integer, WeightedDirectedEdge>> vertices = new HashMap<Integer, HashMap<Integer, WeightedDirectedEdge>>();
+	private HashMap<Integer, HashMap<Integer, WeightedEdge>> vertices = new HashMap<Integer, HashMap<Integer, WeightedEdge>>();
 
 	//Adding a "num" vertex adds the key "num" to the "vertices" HashMap with a corresponding value of a new empty HashMap 
 	public void addVertex(int num) {
 		
 		if (!vertices.containsKey(num))
 		{
-			vertices.put(num, new HashMap<Integer, WeightedDirectedEdge>());
+			vertices.put(num, new HashMap<Integer, WeightedEdge>());
 		}
 	}
 
@@ -28,25 +28,25 @@ public class WeightedGraph {
 		if (vertices.containsKey(from) && vertices.containsKey(to))
 		{
 			//get the sub-HashMap where the key is equal to "from"
-			HashMap<Integer, WeightedDirectedEdge> edgeTos = vertices.get(from);
+			HashMap<Integer, WeightedEdge> edgeTos = vertices.get(from);
 			
 			//if the sub-HashMap has the "to" key, get the WeightedDirectedEdge and add the EdgeComponent to it
 			if (edgeTos.containsKey(to))
 			{
-				WeightedDirectedEdge wDEdge = edgeTos.get(to);
+				WeightedEdge wDEdge = edgeTos.get(to);
 				wDEdge.addEdge(e);
 			}
 			//otherwise create a new WeightedDirectedEdge, add the EdgeComponent to it, and put it in the sub-HashMap
 			else
 			{
-				WeightedDirectedEdge wDEdge = new WeightedDirectedEdge(from, to);
+				WeightedEdge wDEdge = new WeightedEdge(from, to);
 				wDEdge.addEdge(e);
 				edgeTos.put(to, wDEdge);
 			}
 		}
 	}
 	
-	public HashMap<Integer, HashMap<Integer, WeightedDirectedEdge>> exportGraph()
+	public HashMap<Integer, HashMap<Integer, WeightedEdge>> exportGraph()
 	{
 		return vertices;
 	}
@@ -57,7 +57,7 @@ public class WeightedGraph {
 		sb.append("From     To     Weight\n");
 		for (Integer from: vertices.keySet())
 		{
-			HashMap<Integer, WeightedDirectedEdge> toVertices = vertices.get(from);
+			HashMap<Integer, WeightedEdge> toVertices = vertices.get(from);
 			for (Integer to: toVertices.keySet())
 			{
 				sb.append(from.toString() + "         " + to.toString() + "       " + toVertices.get(to).weight() +"\n");
