@@ -44,9 +44,10 @@ public final class MinimumCutEdges {
 		int startCommunity = communityNetwork.vertexToCommunity(startVertex);
 		int endCommunity = communityNetwork.vertexToCommunity(endVertex);
 		
+		//return empty list if the start community equals end community
 		if (startCommunity == endCommunity)
 		{
-			return null;
+			return new LinkedList<EdgeComponent>();
 		}
 		
 		//perform the FordFulkerson algorithm
