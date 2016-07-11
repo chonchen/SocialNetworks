@@ -29,4 +29,6 @@ public interface Graph {
     public HashMap<Integer, HashSet<Integer>> exportGraph();
     
     public Graph reverse();
+    
+    public boolean containsVertex(int vertex);
 } 

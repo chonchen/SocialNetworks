@@ -15,6 +15,11 @@ public final class MinimumCutEdges {
 	
 	public static List<EdgeComponent> getEdges(Graph graph, int startVertex, int endVertex)
 	{
+		if (!graph.containsVertex(startVertex) || !graph.containsVertex(endVertex))
+		{
+			throw new IllegalArgumentException("Must be valid vertices");
+		}
+		
 		//Transform CapGraph to a WeightedGraph
 		CommunityNetwork communityNetwork = new CommunityNetwork(graph);
 		WeightedGraph weightedGraph = communityNetwork.getCommunityGraph();
@@ -38,6 +43,11 @@ public final class MinimumCutEdges {
 		
 		int startCommunity = communityNetwork.vertexToCommunity(startVertex);
 		int endCommunity = communityNetwork.vertexToCommunity(endVertex);
+		
+		if (startCommunity == endCommunity)
+		{
+			return null;
+		}
 		
 		//perform the FordFulkerson algorithm
 		FordFulkerson fordfulkerson = new FordFulkerson(flowNetwork, startCommunity, endCommunity);

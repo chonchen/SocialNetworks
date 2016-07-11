@@ -140,6 +140,12 @@ public class CapGraph implements Graph {
 		return reverse;
 	}
 	
+	//tells if graph contains a vertex
+	public boolean containsVertex(int vertex)
+	{
+		return vertices.containsKey(vertex);
+	}
+	
 	//returns the reverse post order
 	private List<Integer> reversePostOrder(Graph g)
 	{
